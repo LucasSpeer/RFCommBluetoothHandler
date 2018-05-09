@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">RFCommBluetoohHandler</string>
+
+    <string name="mainTitle">Main Menu</string>
+    <string name="mainConfButton">Choose a Device</string>
+    <string name="mainAttemptButton">Attempt to Connect</string>
+    <string name="mainStatus">Current Device: </string>
+
+    <string name="confTitle">Choose a Device: </string>
+    <string name="confSubtitle">Devices must be paired</string>
+    <string name="confBackButton">Back</string>
+    <string name="confSelectButton">Confirm</string>
+
+
+</resources>
