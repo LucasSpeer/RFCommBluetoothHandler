@@ -57,7 +57,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             holder.getTextView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String toSet = ConfActivity.currentSelection;    //Get the SSID selected
+                    ConfActivity.currentSelection = mDataSet[position];   //Get the Device selected
+                    ConfActivity.selectionPosition = position;
                     for(int i = 0; i < deviceOptions.length; i++) {
                         if (deviceOptions[i] != null) {
                             deviceOptions[i].setBackground(unclickedBackground.getBackground());  //Unhighlight all options

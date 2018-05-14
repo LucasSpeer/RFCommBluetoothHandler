@@ -11,5 +11,5 @@
     <string name="confBackButton">Back</string>
     <string name="confSelectButton">Confirm</string>
 
-
+    <string name="noDevice">No device found</string>
 </resources>
