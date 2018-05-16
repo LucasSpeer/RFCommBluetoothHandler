@@ -3,12 +3,15 @@ package speer.lucas.rfcommbluetoohhandler;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,12 +26,11 @@ public class MainActivity extends AppCompatActivity {
     public static String MAC; //Address of connected device
     public static UUID uuid = null;
     public static BluetoothAdapter mBluetoothAdapter;
-    private BluetoothDevice BTdevice;
     public static InputStream mmInStream = null;     //Initialize IO streams
     public static OutputStream mmOutStream = null;
     public static Boolean BTFound = false;
     public static String BTStatus;
-    public BluetoothHandler BTHandler;
+    public static BluetoothHandler BTHandler;
     public static String rememberedDevice;
 
     public static final Handler handler = new Handler();
@@ -50,8 +52,36 @@ public class MainActivity extends AppCompatActivity {
             mBluetoothAdapter.enable();
         }
         uuid = UUID.fromString("94f39d29-7d6d-437d-973b-fba39e49d4ee");
+
+        //Setup for Buttons and TextViews
+
+        Button chooseDeviceButton = findViewById(R.id.mainConfButton);
+        chooseDeviceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ConfActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button connectButton = findViewById(R.id.mainAttemptButton);
+        connectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(BTHandler != null) {
+                    BTHandler.run();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), R.string.noDevice, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        if( rememberedDevice.equals("none")) {
+            connectButton.setVisibility(View.INVISIBLE);
+        }
         editor.apply();
-    
+
     }
 
 }
