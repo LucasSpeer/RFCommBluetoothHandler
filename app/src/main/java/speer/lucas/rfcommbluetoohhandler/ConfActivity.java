@@ -52,10 +52,15 @@ public class ConfActivity extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String tmpName;
                 if(currentSelection != null){
                     MainActivity.rememberedDevice = currentSelection;
-                    BluetoothDevice[] devices = (BluetoothDevice[]) pairedDevices.toArray();
-                    BTdevice = devices[selectionPosition];
+                    for (BluetoothDevice device : pairedDevices) {
+                        tmpName = device.getName();
+                        if(tmpName.equals(currentSelection)){
+                            BTdevice = device;
+                        }
+                    }
                     MainActivity.BTHandler =  new BluetoothHandler(BTdevice);
                 }
             }

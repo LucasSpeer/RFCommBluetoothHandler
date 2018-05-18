@@ -1,5 +1,6 @@
 package speer.lucas.rfcommbluetoohhandler;
 
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private String[] mDataSet;              //String array of wifi networks to be shown
     private TextView clickedBackground;     //for highlighting the selection
     private TextView unclickedBackground;   //for unhighlighting
-    private TextView deviceOptions[];         //TextView array for looping through to highlight/unhighlight
+    private Resources resources;
+    private static TextView deviceOptions[];         //TextView array for looping through to highlight/unhighlight
     // BEGIN_INCLUDE(recyclerViewSampleViewHolder)
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
@@ -46,12 +48,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
         clickedBackground = view.findViewById(R.id.clickedText);       //get the TextViews from item_simple_itemview.xml for highlighting/unhighlighting
         unclickedBackground = view.findViewById(R.id.simpleText);
+        resources = parent.getResources();
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-
         holder.getTextView().setText(mDataSet[position]);
         deviceOptions[position] = holder.getTextView();       //Add each TextView into the deviceOptions array
         holder.getTextView().setOnClickListener(new View.OnClickListener() {
@@ -60,11 +62,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 ConfActivity.currentSelection = mDataSet[position];   //Get the Device selected
                 ConfActivity.selectionPosition = position;
                 for(int i = 0; i < deviceOptions.length; i++) {
-                    if (deviceOptions[i] != null) {
-                        deviceOptions[i].setBackground(unclickedBackground.getBackground());  //Unhighlight all options
-                    }
+                    deviceOptions[i].setBackgroundColor(resources.getColor(R.color.white));
                 }
-                v.setBackground(clickedBackground.getBackground()); //Highlight the selected option
+                deviceOptions[position].setBackgroundColor(resources.getColor(R.color.colorAccent)); //Highlight the selected option
+
             }
         });
 
@@ -72,10 +73,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        if(ConfActivity.pairedDevices == null || ConfActivity.pairedDevices.isEmpty()){
-            return 0;
-        }
-        else return ConfActivity.nameList.length;
+        return mDataSet.length;
 
     }
 }
