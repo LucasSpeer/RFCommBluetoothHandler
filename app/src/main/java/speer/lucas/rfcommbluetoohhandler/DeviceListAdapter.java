@@ -1,5 +1,7 @@
 package speer.lucas.rfcommbluetoohhandler;
-
+/*
+    This adapter takes a string array of strings and returns an adapter for a recycler view
+*/
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,17 +10,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.ViewHolder> {
     private static final String TAG = "CustomAdapter";
     private String[] mDataSet;              //String array of wifi networks to be shown
-    private TextView clickedBackground;     //for highlighting the selection
-    private TextView unclickedBackground;   //for unhighlighting
-    private Resources resources;
-    private static TextView deviceOptions[];         //TextView array for looping through to highlight/unhighlight
-    // BEGIN_INCLUDE(recyclerViewSampleViewHolder)
-    /**
-     * Provide a reference to the type of views that you are using (custom ViewHolder)
-     */
+    private Resources resources;            //Resources for getting colors
+    private static TextView textViewArr[];         //TextView array for looping through to highlight/unhighlight
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textView;
 
@@ -38,16 +35,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         }
     }
 
-    public MyAdapter(String[] dataSet){
+    public DeviceListAdapter(String[] dataSet){
         mDataSet = dataSet;
-        deviceOptions = new TextView[dataSet.length]; //initialize the TextView array when the adapter is first created
+        textViewArr = new TextView[dataSet.length]; //initialize the TextView array when the adapter is first created
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-        clickedBackground = view.findViewById(R.id.clickedText);       //get the TextViews from item_simple_itemview.xml for highlighting/unhighlighting
-        unclickedBackground = view.findViewById(R.id.simpleText);
         resources = parent.getResources();
         return new ViewHolder(view);
     }
@@ -55,16 +50,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.getTextView().setText(mDataSet[position]);
-        deviceOptions[position] = holder.getTextView();       //Add each TextView into the deviceOptions array
+        textViewArr[position] = holder.getTextView();       //Add each TextView into the textViewArr array
         holder.getTextView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 ConfActivity.currentSelection = mDataSet[position];   //Get the Device selected
-                ConfActivity.selectionPosition = position;
-                for(int i = 0; i < deviceOptions.length; i++) {
-                    deviceOptions[i].setBackgroundColor(resources.getColor(R.color.white));
+                ConfActivity.selectionPosition = position;            //and the position in the array
+
+
+                for(int i = 0; i < textViewArr.length; i++) {
+                    textViewArr[i].setBackground(null);
                 }
-                deviceOptions[position].setBackgroundColor(resources.getColor(R.color.colorAccent)); //Highlight the selected option
+                textViewArr[position].setBackgroundColor(resources.getColor(R.color.colorAccent)); //Highlight the selected option
 
             }
         });

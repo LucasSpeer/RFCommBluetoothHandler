@@ -1,9 +1,11 @@
 package speer.lucas.rfcommbluetoohhandler;
 
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -92,6 +94,7 @@ public class ConnectedThread extends Thread {
         private final Handler mhandler = MainActivity.handler;
         @Override
         protected Void doInBackground(Void... voids) {
+
             mmBuffer = new byte[1024];
             int numBytes = 0; // bytes returned from read()
             String tmp = "";

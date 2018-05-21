@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import java.util.Set;
 
@@ -33,7 +32,7 @@ public class ConfActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.BluetoothList);
         mLayoutManager = new LinearLayoutManager(ConfActivity.this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MyAdapter(nameList);            //Get the adapter for String[] -> RecyclerView as defined in MyAdapter
+        mAdapter = new DeviceListAdapter(nameList);            //Get the adapter for String[] -> RecyclerView as defined in DeviceListAdapter
         mRecyclerView.setAdapter(mAdapter);
 
         //button setup
@@ -62,6 +61,9 @@ public class ConfActivity extends AppCompatActivity {
                         }
                     }
                     MainActivity.BTHandler =  new BluetoothHandler(BTdevice);
+                    Intent intent = new Intent(ConfActivity.this, MainActivity.class);  //when back is clicked return to main menu
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);  //clear the ConfActivity of the top of the stack before starting MainActivity
+                    startActivity(intent);
                 }
             }
         });
