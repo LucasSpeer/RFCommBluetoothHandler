@@ -56,6 +56,7 @@ public class ConnectedThread extends Thread {
             MainActivity.BTFound = true;
             isConnected = true;
             MainActivity.BTStatus = "connected";       //Update the status for the main menu text
+            MainActivity.handler.sendEmptyMessage(0);
         }
         else{
             MainActivity.BTFound = false;
@@ -91,7 +92,6 @@ public class ConnectedThread extends Thread {
         private byte[] mmBuffer; // mmBuffer store for the stream
         private InputStream mmInStream = MainActivity.mmInStream;
         private OutputStream mmOutStream = MainActivity.mmOutStream;
-        private final Handler mhandler = MainActivity.handler;
         @Override
         protected Void doInBackground(Void... voids) {
 

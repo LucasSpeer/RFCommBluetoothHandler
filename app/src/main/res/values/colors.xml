@@ -5,4 +5,5 @@
     <color name="colorAccent">#AFAFAF</color>
     <color name="white">#FFFFFF</color>
     <color name="clickedHighlight">#AFAFAF</color>
+    <color name="button">#BBBBBB</color>
 </resources>

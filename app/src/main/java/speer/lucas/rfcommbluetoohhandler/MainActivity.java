@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     protected RecyclerView.LayoutManager mLayoutManager;
 
 
-    public static final Handler handler = new Handler();
+    public static Handler handler;
     private SharedPreferences prefs = null;      //create a shared preference for storing settings
     private SharedPreferences.Editor editor;
 
@@ -75,9 +77,7 @@ public class MainActivity extends AppCompatActivity {
         uuid = UUID.fromString("94f39d29-7d6d-437d-973b-fba39e49d4ee");
         findDevices();
 
-        //Setup for Buttons and TextViews
-        final TextView deviceStatus = findViewById(R.id.mainStatusText);
-
+        //Setup for Button
         final Button connectButton = findViewById(R.id.mainAttemptButton);
         connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,10 +109,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Fragment Initialize
         Fragment mainListFrag = new deviceFragment();
-        if( getSupportFragmentManager().findFragmentById(R.id.mainListFrag) == null){
-            getSupportFragmentManager().beginTransaction().add(R.id.mainListFrag, mainListFrag).commit();
-        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().add(R.id.mainListFrag, mainListFrag).commit();
+        //View fragView = mainListFrag.getView();
         /*
             @Override
             public void onClick(View v) {
@@ -123,13 +124,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         */
-        mRecyclerView = findViewById(R.id.mainListRecycler);
-        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView = findViewById(R.id.mainListRecycler);    //find the recyclerView
+        mLayoutManager = new LinearLayoutManager(this);     //Get and set a new layout manager
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new DeviceListAdapter(MainActivity.nameList);            //Get the adapter for String[] -> RecyclerView as defined in DeviceListAdapter
+        mAdapter = new DeviceListAdapter(MainActivity.nameList);            //Get and set the adapter for String[] -> RecyclerView as defined in DeviceListAdapter
         mRecyclerView.setAdapter(mAdapter);
+
+        //setup Handler
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg){
+                startActivity(new Intent(MainActivity.this, ConnectedActivity.class));
+            }
+        };
         editor.apply();
-        updateStatus();
     }
 
     //A function to update the status text

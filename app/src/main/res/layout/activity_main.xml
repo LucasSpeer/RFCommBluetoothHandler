@@ -31,17 +31,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/mainStatusText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainAttemptButton" />
-
     <fragment
         android:id="@+id/mainListFrag"
         android:name="speer.lucas.rfcommbluetoohhandler.deviceFragment"
@@ -53,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainStatusText"
+        app:layout_constraintTop_toBottomOf="@+id/mainAttemptButton"
         tools:layout="@layout/main_list_frag" />
 
 </android.support.constraint.ConstraintLayout>
