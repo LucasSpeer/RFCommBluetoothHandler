@@ -5,6 +5,7 @@
     <string name="mainConfButton">Choose a Device</string>
     <string name="mainAttemptButton">Attempt to Connect</string>
     <string name="mainStatus">Current Device: </string>
+    <string name="mainListTitle">Paired Devices(choose one):</string>
 
     <string name="confTitle">Choose a Device: </string>
     <string name="confSubtitle">Devices must be paired</string>

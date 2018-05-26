@@ -25,7 +25,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ConfActivity.currentSelection = ConfActivity.nameList[getAdapterPosition()];
+                    MainActivity.currentSelection = MainActivity.nameList[getAdapterPosition()];
                 }
             });
             textView = (TextView) v.findViewById(R.id.simpleText);     //Get the xml element to display the text in
@@ -55,9 +55,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
             @Override
             public void onClick(View v) {
 
-                ConfActivity.currentSelection = mDataSet[position];   //Get the Device selected
-                ConfActivity.selectionPosition = position;            //and the position in the array
-
+                MainActivity.currentSelection = mDataSet[position];   //Get the Device selected
+                MainActivity.selectionPosition = position;            //and the position in the array
 
                 for(int i = 0; i < textViewArr.length; i++) {
                     textViewArr[i].setBackground(null);

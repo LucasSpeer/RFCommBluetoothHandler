@@ -8,10 +8,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +41,18 @@ public class MainActivity extends AppCompatActivity {
     public static String BTStatus;
     public static BluetoothHandler BTHandler;
     public static String rememberedDevice;
+    public static Set<BluetoothDevice> pairedDevices;
+    public static String[] nameList;
+    public static String[] MACList;
+    private BluetoothDevice BTdevice;
+
+    //List Variables
+    public static String currentSelection;
+    public static int selectionPosition;
+    protected RecyclerView mRecyclerView;
+    protected RecyclerView.Adapter mAdapter;
+    protected RecyclerView.LayoutManager mLayoutManager;
+
 
     public static final Handler handler = new Handler();
     private SharedPreferences prefs = null;      //create a shared preference for storing settings
@@ -56,48 +73,61 @@ public class MainActivity extends AppCompatActivity {
             mBluetoothAdapter.enable();
         }
         uuid = UUID.fromString("94f39d29-7d6d-437d-973b-fba39e49d4ee");
+        findDevices();
 
         //Setup for Buttons and TextViews
+        final TextView deviceStatus = findViewById(R.id.mainStatusText);
 
-        Button chooseDeviceButton = findViewById(R.id.mainConfButton);
-        chooseDeviceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ConfActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button connectButton = findViewById(R.id.mainAttemptButton);
+        final Button connectButton = findViewById(R.id.mainAttemptButton);
         connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String tmpName;
+                if(currentSelection != null) {
+                    rememberedDevice = currentSelection;
+                    for (BluetoothDevice device : pairedDevices) {
+                        tmpName = device.getName();
+                        if (tmpName.equals(currentSelection)) {
+                            BTdevice = device;
+                        }
+                    }
+                    BTHandler = new BluetoothHandler(BTdevice);
+                }
                 if(BTHandler == null) {
                     Toast.makeText(getApplicationContext(), R.string.noDevice, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     BTHandler.run();
-                    int i = 0;
-                    while (!BTStatus.equals("connected") && i < 20) {
-                        try {
-                            wait(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        i++;
-                    }
+                    /*
                     if (BTStatus.equals("connected")) {
                         Toast.makeText(getApplicationContext(), R.string.connected, Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getApplicationContext(), R.string.timeOut, Toast.LENGTH_SHORT).show();
                     }
+                    */
                 }
             }
         });
 
-        if( rememberedDevice.equals("none")) {
-            connectButton.setVisibility(View.INVISIBLE);
+        Fragment mainListFrag = new deviceFragment();
+        if( getSupportFragmentManager().findFragmentById(R.id.mainListFrag) == null){
+            getSupportFragmentManager().beginTransaction().add(R.id.mainListFrag, mainListFrag).commit();
         }
+        /*
+            @Override
+            public void onClick(View v) {
+                if(currentSelection != null) {
+                    String toSet = getString(R.string.mainStatus) + currentSelection;
+                    deviceStatus.setText(toSet);
+                }
+            }
+        });
+        */
+        mRecyclerView = findViewById(R.id.mainListRecycler);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new DeviceListAdapter(MainActivity.nameList);            //Get the adapter for String[] -> RecyclerView as defined in DeviceListAdapter
+        mRecyclerView.setAdapter(mAdapter);
         editor.apply();
         updateStatus();
     }
@@ -115,10 +145,33 @@ public class MainActivity extends AppCompatActivity {
         deviceText.setText(deviceStr);
     }
 
+    private void findDevices() {
+        /*
+        findDevices() first gets the list of devices paired
+        If none are found an error is shown
+     */
+        pairedDevices = MainActivity.mBluetoothAdapter.getBondedDevices();   //check if already paired
+        String deviceNames[]= new String[pairedDevices.size()];
+        String mac[]= new String[pairedDevices.size()];
+        int i = 0;
+        if (pairedDevices.size() > 0) {       // There are paired devices. Get the name and address of each paired device.
+            for (BluetoothDevice device : pairedDevices) {
+                deviceNames[i] = device.getName();
+                mac[i] = device.getAddress();
+                i++;
+            }
+        } else {
+            //There are no paired devices
+        }
+        nameList = deviceNames;
+        MACList = mac;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         updateStatus();
     }
+
 
 }

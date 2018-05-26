@@ -2,6 +2,7 @@ package speer.lucas.rfcommbluetoohhandler;
 
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.Log;
@@ -67,7 +68,6 @@ public class ConnectedThread extends Thread {
     public void run() {
         Backgrounder task = new Backgrounder();
         task.doInBackground();
-
     }
 
     // Call this method from the main activity to shut down the connection.
