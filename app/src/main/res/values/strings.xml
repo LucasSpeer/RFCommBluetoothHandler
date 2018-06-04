@@ -7,8 +7,8 @@
     <string name="mainListTitle">Paired Devices(choose one):</string>
 
     <string name="connTitle">Choose a Command: </string>
-    <string name="BackButton">Back</string>
-    <string name="SelectButton">Confirm</string>
+    <string name="disconnectButton">Disconnect</string>
+    <string name="confirm">Confirm</string>
 
     <string name="noDevice">No device found</string>
     <string name="connected">Connected!</string>
