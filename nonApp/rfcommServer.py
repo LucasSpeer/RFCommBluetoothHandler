@@ -34,10 +34,9 @@ while True:
 	print("Accepted connection from ", client_info)
 	
 	try:
-		client_sock.send(wifi)
+		client_sock.send("test")
 	except IOError:
 		pass
-	wifiFile.close()
 	try:
 		while True:
 			data = client_sock.recv(1024)
