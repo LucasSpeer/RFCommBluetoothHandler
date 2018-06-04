@@ -85,27 +85,17 @@ public class MainActivity extends AppCompatActivity {
                 String tmpName;
                 if(currentSelection != null) {
                     rememberedDevice = currentSelection;
-                    for (BluetoothDevice device : pairedDevices) {
-                        tmpName = device.getName();
-                        if (tmpName.equals(currentSelection)) {
-                            BTdevice = device;
-                        }
+                }
+                for (BluetoothDevice device : pairedDevices) {
+                    tmpName = device.getName();
+                    if (tmpName.equals(rememberedDevice)) {
+                        BTdevice = device;
                     }
-                    BTHandler = new BluetoothHandler(BTdevice);
                 }
-                if(BTHandler == null) {
-                    Toast.makeText(getApplicationContext(), R.string.noDevice, Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    BTHandler.run();
-                    /*
-                    if (BTStatus.equals("connected")) {
-                        Toast.makeText(getApplicationContext(), R.string.connected, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), R.string.timeOut, Toast.LENGTH_SHORT).show();
-                    }
-                    */
-                }
+                BTHandler = new BluetoothHandler(BTdevice);
+                BTHandler.run();
+
+
             }
         });
 
@@ -140,18 +130,6 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    //A function to update the status text
-    private void updateStatus(){
-        String deviceStr;
-        TextView deviceText = findViewById(R.id.mainStatusText);
-        if(!rememberedDevice.equals("None")) {
-            deviceStr = getString(R.string.mainStatus) + rememberedDevice;
-        }
-        else{
-            deviceStr = getString(R.string.noDevice);
-        }
-        deviceText.setText(deviceStr);
-    }
 
     private void findDevices() {
         /*
@@ -178,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        updateStatus();
     }
 
 
