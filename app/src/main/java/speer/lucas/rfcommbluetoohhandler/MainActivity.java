@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
                 BTHandler = new BluetoothHandler(BTdevice);
                 BTHandler.run();
 
-
             }
         });
 
@@ -154,9 +153,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onDestroy() {
+        super.onDestroy();
+        editor.putString("deviceName", rememberedDevice);
+        editor.apply();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!BTFound && mmInStream != null){     //If 'Disconnect' was pushed in the connected activity (i.e. a connection exists that is not needed)
+            BTHandler.cancel();                 //Close the connection (this will set mmIn/OutStream to null)
+        }
+    }
 
 }

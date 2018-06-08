@@ -36,6 +36,7 @@ public class ConnectedActivity extends SupportActivity {
         disconnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.BTFound = false;
                 Intent intent = new Intent(ConnectedActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

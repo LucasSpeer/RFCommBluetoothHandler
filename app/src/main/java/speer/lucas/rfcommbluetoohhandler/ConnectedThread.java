@@ -31,7 +31,7 @@ public class ConnectedThread extends Thread {
     // ... (Add other message types here as needed.)
     private final BluetoothSocket mmSocket;
     private byte[] mmBuffer; // mmBuffer store for the stream
-    public Boolean isConnected;
+    private Boolean isConnected;
     public ConnectedThread(BluetoothSocket socket) {
         mmSocket = socket;
         InputStream tmpIn = null;
@@ -76,6 +76,8 @@ public class ConnectedThread extends Thread {
         try {
             if(mmSocket != null){
                 mmSocket.close();
+                MainActivity.mmInStream = null;
+                MainActivity.mmOutStream = null;
             }
         } catch (IOException e) {
             Log.e(TAG, "Could not close the connect socket", e);
