@@ -1,7 +1,6 @@
 package speer.lucas.rfcommbluetoohhandler;
 /*
     This adapter takes a string array of strings and returns an adapter for a recycler view
-    Only difference between this and DeviceListAdapter is the layout design and the highlighting that does not happen here
 */
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-public class ButtonListAdapter extends RecyclerView.Adapter<ButtonListAdapter.ViewHolder> {
+public class CommandListAdapter extends RecyclerView.Adapter<CommandListAdapter.ViewHolder> {
     private static final String TAG = "CustomAdapter";
     private String[] mDataSet;              //String array of wifi networks to be shown
     private Resources resources;            //Resources for getting colors
@@ -26,17 +25,17 @@ public class ButtonListAdapter extends RecyclerView.Adapter<ButtonListAdapter.Vi
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MainActivity.currentSelection = MainActivity.nameList[getAdapterPosition()];
+                    ConnectedActivity.connCurrentSelection = ConnectedActivity.commandList[getAdapterPosition()];
                 }
             });
-            textView = (TextView) v.findViewById(R.id.listButton);     //Get the xml element to display the text in
+            textView = v.findViewById(R.id.simpleText);     //Get the xml element to display the text in
         }
         public TextView getTextView() {
             return textView;
         }
     }
 
-    public ButtonListAdapter(String[] dataSet){
+    public CommandListAdapter(String[] dataSet){
         mDataSet = dataSet;
         textViewArr = new TextView[dataSet.length]; //initialize the TextView array when the adapter is first created
     }
@@ -56,6 +55,13 @@ public class ButtonListAdapter extends RecyclerView.Adapter<ButtonListAdapter.Vi
             @Override
             public void onClick(View v) {
 
+                ConnectedActivity.connCurrentSelection = mDataSet[position];   //Get the Device selected
+                ConnectedActivity.selectionPosition = position;            //and the position in the array
+
+                for(int i = 0; i < textViewArr.length; i++) {
+                    textViewArr[i].setBackground(null);
+                }
+                textViewArr[position].setBackgroundColor(resources.getColor(R.color.colorAccent)); //Highlight the selected option
 
             }
         });

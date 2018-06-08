@@ -16,56 +16,56 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/disconnectButton"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            android:id="@+id/editorBackButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:background="@color/button"
-            android:text="@string/disconnectButton"
+            android:text="@string/back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
-            android:id="@+id/connectedConfirm"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            android:id="@+id/editorSendButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:background="@color/button"
             android:text="@string/confirm"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/connTitle"
+    <EditText
+        android:id="@+id/editorTextBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/connTitle"
-        android:textSize="24sp"
+        android:ems="10"
+        android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editorFileName" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/connectedRecycler"
+    <EditText
+        android:id="@+id/editorFileName"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        android:ems="10"
+        android:inputType="text|textNoSuggestions"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:text="@string/fileName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/connTitle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

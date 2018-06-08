@@ -9,8 +9,16 @@
     <string name="connTitle">Choose a Command: </string>
     <string name="disconnectButton">Disconnect</string>
     <string name="confirm">Confirm</string>
+    <string name="back">Back</string>
 
     <string name="noDevice">No device found</string>
     <string name="connected">Connected!</string>
     <string name="timeOut">The connection timed out</string>
+
+    <string name="fileName">File Name:</string>
+
+    <string name="onBackToConnAct">+=back</string>
+    <string-array name="commands">
+        <item>textEditor</item>
+    </string-array>
 </resources>

@@ -2,32 +2,57 @@ package speer.lucas.rfcommbluetoohhandler;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.SupportActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.IOException;
 
+
+
 public class ConnectedActivity extends SupportActivity {
+    //List Variables
+    public static String connCurrentSelection = "none";
+    public static int selectionPosition;
+    public static String[] commandList;
+    protected RecyclerView mRecyclerView;
+    protected RecyclerView.Adapter mAdapter;
+    protected RecyclerView.LayoutManager mLayoutManager;
+
+
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connected);
-
-        final EditText toSend = findViewById(R.id.testTextBox);
-
+        Resources resources = getResources();
+        commandList = resources.getStringArray(R.array.commands);
         Button confirm = findViewById(R.id.connectedConfirm);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String stringToSend = toSend.getText().toString();
-                try {
-                    MainActivity.mmOutStream.write(stringToSend.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if(!connCurrentSelection.equals("none")) {
+                    String stringToSend = connCurrentSelection;
+                    try {
+                        MainActivity.mmOutStream.write(stringToSend.getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                switch (connCurrentSelection){
+                    case "textEditor":
+                        Intent intent = new Intent(ConnectedActivity.this, TextEditorActivity.class);
+                        startActivity(intent);
+                        try {
+                            MainActivity.mmOutStream.write(commandList[0].getBytes());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                 }
             }
         });
@@ -42,5 +67,11 @@ public class ConnectedActivity extends SupportActivity {
                 startActivity(intent);
             }
         });
+
+        mRecyclerView = findViewById(R.id.connectedRecycler);    //find the recyclerView
+        mLayoutManager = new LinearLayoutManager(this);     //Get and set a new layout manager
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new CommandListAdapter(commandList);            //Get and set the adapter for String[] -> RecyclerView as defined in DeviceListAdapter
+        mRecyclerView.setAdapter(mAdapter);
     }
 }

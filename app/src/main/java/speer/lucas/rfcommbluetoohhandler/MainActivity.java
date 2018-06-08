@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
     public static BluetoothHandler BTHandler;
     public static String rememberedDevice;
     public static Set<BluetoothDevice> pairedDevices;
-    public static String[] nameList;
-    public static String[] MACList;
     private BluetoothDevice BTdevice;
 
     //List Variables
@@ -54,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     protected RecyclerView mRecyclerView;
     protected RecyclerView.Adapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
+    public static String[] nameList;
+    public static String[] MACList;
 
 
     public static Handler handler;
