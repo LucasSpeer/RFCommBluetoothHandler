@@ -25,9 +25,29 @@ advertise_service( server_sock, "RFCommServer",
                     
 	
 def dataHandler(data):
-	print(data)	#to test the incoming data
+	if data == "textEditor":
+		data = ""
+		try:
+			while not data.startswith("+=back") :
+				data = client_sock.recv(1024)
+				if len(data) == 0: break
+				textEditor(data)
+		except IOError:
+			pass
 
-
+def textEditor(data):
+	if not data.startswith("textEditor") :
+		dataLines = data.split("\n")
+		fileName = dataLines[0]
+		dataLines.pop(0)
+		toWrite = ""
+		for x in dataLines:
+			toWrite += ( x + "\n" )
+		newFile = open(fileName, 'w')
+		newFile.write(toWrite[:-1])
+		newFile.close()
+		data = ""
+	
 while True:                   
 	print("Waiting for connection on RFCOMM channel %d" % port)
 	client_sock, client_info = server_sock.accept()		#Accept incoming connections
