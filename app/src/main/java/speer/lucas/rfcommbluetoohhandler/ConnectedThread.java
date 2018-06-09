@@ -8,6 +8,10 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -31,6 +35,7 @@ public class ConnectedThread extends Thread {
     // ... (Add other message types here as needed.)
     private final BluetoothSocket mmSocket;
     private byte[] mmBuffer; // mmBuffer store for the stream
+    public static JSONObject readJSONdata;
     private Boolean isConnected;
     public ConnectedThread(BluetoothSocket socket) {
         mmSocket = socket;
@@ -110,6 +115,11 @@ public class ConnectedThread extends Thread {
                        finalByteArr[i] = ((char) mmBuffer[i]);
                        tmp += finalByteArr[i];
                    }
+                    try {
+                        readJSONdata = new JSONObject(tmp);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 } catch (IOException e) {
                     Log.d(TAG, "Input stream was disconnected", e);
                     break;
