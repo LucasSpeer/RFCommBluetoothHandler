@@ -1,0 +1,4 @@
+#ignore the directory for local specific data
+nonApp/local/*
+nonApp/file* 
+nonApp/.file*
