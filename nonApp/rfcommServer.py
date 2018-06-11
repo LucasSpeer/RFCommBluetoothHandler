@@ -27,6 +27,7 @@ data = "" #recklessly utilize global variables
 JSONfiles = ""
 
 def getFileList() :
+	os.system("sudo rm fileList.save .fileList.swp")
 	os.system("ls local/ | sudo nano fileList")
 	fileFile = open('fileList.save', 'r+') #open the file containing the list of files generated above 
 	nameStr = ""
@@ -42,20 +43,19 @@ def getFileList() :
 			tmpContents = tmpContents.replace("\n", "\\n")
 			jsonStr += "\"" + item + "\": \"" + tmpContents + "\",\n"
 			tmpFile.close()
-	jsonStr = jsonStr[:-1] #remove the last comma
-	jsonStr += "\n}\n\"fileNames\": \"" + nameStr + "\"\n}"
+	jsonStr = jsonStr[:-2] #remove the last comma
+	jsonStr += "\n},\n\"fileNames\": \"" + nameStr + "\"\n}\n}"
 	fileFile.close()
-	JSONfiles = jsonStr
+	return jsonStr
 
 def dataHandler(data):
-	print("data Handler")
-	if data == "textEditor":
+	print(data)
+	if data == "New File":
 		data = ""
 		try:
 			while not data == "+=back" :
 				data = client_sock.recv(1024)
 				if len(data) == 0: break
-				print(data)
 				if data == "+=back" : break
 				textEditor(data)
 		except IOError:
@@ -68,18 +68,21 @@ def textEditor(data):
 	toWrite = ""					#create an empty string for the data
 	for x in dataLines:
 		toWrite += ( x + "\n" )		#Reassemble the data and add the '\n's that were removed
-	if not fileName.startswith("textEditor") :
+	if not fileName.startswith("New File") :
 		newFile = open( "local/" + fileName, 'w' )	#create a file in write mode
 		newFile.write(toWrite[:-1])		#write the data, ignoring the last \n with [:-1]
 		newFile.close()
-		print("file saved")
+		print("file local/" + fileName + " saved")
+		JSONfiles = getFileList()		#Whenever data is handled, update the file list and resend
+		client_sock.send(JSONfiles)
 	data = ""						#clear the data variable
+	
 	
 while True:                   
 	print("Waiting for connection on RFCOMM channel %d" % port)
 	client_sock, client_info = server_sock.accept()		#Accept incoming connections
 	print("Accepted connection from ", client_info)
-	getFileList()
+	JSONfiles = getFileList()
 	try:
 		client_sock.send(JSONfiles)
 	except IOError:
@@ -89,5 +92,7 @@ while True:
 			data = client_sock.recv(1024)
 			if len(data) == 0: break
 			dataHandler(data)
+			JSONfiles = getFileList()		#Whenever data is handled, update the file list and resend
+			client_sock.send(JSONfiles)
 	except IOError:
 		pass
