@@ -2,6 +2,7 @@ package speer.lucas.rfcommbluetoohhandler;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.SupportActivity;
 import android.view.View;
@@ -19,6 +20,13 @@ public class TextEditorActivity extends SupportActivity {
 
         final EditText fileName = findViewById(R.id.editorFileName);
         final EditText fileContents = findViewById(R.id.editorTextBox);
+        Resources res = getResources();
+        String commandList[] = res.getStringArray(R.array.commands);
+        try {
+            MainActivity.mmOutStream.write(commandList[0].getBytes());  //This command ultimately leads to the text editor
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Button confirm = findViewById(R.id.editorSendButton);
         confirm.setOnClickListener(new View.OnClickListener() {
@@ -49,5 +57,12 @@ public class TextEditorActivity extends SupportActivity {
                 }
             }
         });
+
+        String toOpen = getIntent().getStringExtra("fileName");
+        String openedContents = getIntent().getStringExtra("fileContents");
+        if(toOpen != null){
+            fileName.setText(toOpen);
+            fileContents.setText(openedContents);
+        }
     }
 }

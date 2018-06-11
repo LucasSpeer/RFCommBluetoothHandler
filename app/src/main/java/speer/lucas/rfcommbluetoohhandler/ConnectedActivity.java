@@ -31,7 +31,9 @@ public class ConnectedActivity extends SupportActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connected);
         Resources resources = getResources();
-        commandList = resources.getStringArray(R.array.commands);
+        commandList = resources.getStringArray(R.array.commands);   //Get list of possible commands from resources
+
+        //Setup Buttons
         Button confirm = findViewById(R.id.connectedConfirm);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,15 +46,15 @@ public class ConnectedActivity extends SupportActivity {
                         e.printStackTrace();
                     }
                 }
-                switch (connCurrentSelection){
-                    case "textEditor":
-                        Intent intent = new Intent(ConnectedActivity.this, TextEditorActivity.class);
-                        startActivity(intent);
-                        try {
-                            MainActivity.mmOutStream.write(commandList[0].getBytes());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                switch (connCurrentSelection){  //Each case is a string from @strings/commands[]
+                    case "New File":
+                        Intent editorIntent = new Intent(ConnectedActivity.this, TextEditorActivity.class);
+                        startActivity(editorIntent);
+                        break;
+                    case "Open a File":
+                        Intent fileIntent = new Intent(ConnectedActivity.this, FileChooseActivity.class);
+                        startActivity(fileIntent);
+                        break;
                 }
             }
         });

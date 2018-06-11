@@ -35,7 +35,7 @@ public class ConnectedThread extends Thread {
     // ... (Add other message types here as needed.)
     private final BluetoothSocket mmSocket;
     private byte[] mmBuffer; // mmBuffer store for the stream
-    public static JSONObject readJSONdata;
+    public static String readData;
     private Boolean isConnected;
     public ConnectedThread(BluetoothSocket socket) {
         mmSocket = socket;
@@ -104,22 +104,19 @@ public class ConnectedThread extends Thread {
 
             mmBuffer = new byte[1024];
             int numBytes = 0; // bytes returned from read()
-            String tmp = "";
+
             // Keep listening to the InputStream until an exception occurs.
             while(MainActivity.mmInStream != null){
                 try {
-                   // Read from the InputStream.
+                   // Read from the InputStream
                    numBytes = mmInStream.read(mmBuffer);
                    char finalByteArr[] = new char[numBytes];
+                   String tmp = "";
                    for(int i = 0; i < numBytes; i++){
                        finalByteArr[i] = ((char) mmBuffer[i]);
                        tmp += finalByteArr[i];
                    }
-                    try {
-                        readJSONdata = new JSONObject(tmp);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                   readData = tmp;
                 } catch (IOException e) {
                     Log.d(TAG, "Input stream was disconnected", e);
                     break;

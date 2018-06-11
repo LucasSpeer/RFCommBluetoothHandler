@@ -25,6 +25,8 @@
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".TextEditorActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".FileChooseActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
     </application>
 
 </manifest>

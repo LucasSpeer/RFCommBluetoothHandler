@@ -15,10 +15,14 @@
     <string name="connected">Connected!</string>
     <string name="timeOut">The connection timed out</string>
 
+    <string name="fileListTitle">Choose a File:</string>
+    <string name="open">Open</string>
+    <string name="delete">Delete</string>
     <string name="fileName">File Name:</string>
 
     <string name="onBackToConnAct">+=back</string>
     <string-array name="commands">
-        <item>textEditor</item>
+        <item>New File</item>
+        <item>Open a File</item>
     </string-array>
 </resources>
