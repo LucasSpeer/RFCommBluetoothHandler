@@ -37,14 +37,6 @@ public class ConnectedActivity extends SupportActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!connCurrentSelection.equals("none")) {
-                    String stringToSend = connCurrentSelection;
-                    try {
-                        MainActivity.mmOutStream.write(stringToSend.getBytes());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
                 switch (connCurrentSelection){  //Each case is a string from @strings/commands[]
                     case "New File":
                         Intent editorIntent = new Intent(ConnectedActivity.this, TextEditorActivity.class);

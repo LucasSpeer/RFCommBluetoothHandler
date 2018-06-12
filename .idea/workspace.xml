@@ -15,13 +15,9 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/ConnectedActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/ConnectedActivity.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/ConnectedThread.java" afterPath="$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/ConnectedThread.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/FileChooseActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/FileChooseActivity.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/TextEditorActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/TextEditorActivity.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -72,21 +68,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConnectedThread.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ConnectedThread.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/ConnectedThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="113" column="66" lean-forward="false" selection-start-line="113" selection-start-column="66" selection-end-line="113" selection-end-column="66" />
+            <state relative-caret-position="188">
+              <caret line="95" column="13" lean-forward="false" selection-start-line="95" selection-start-column="13" selection-end-line="95" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConnectedActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ConnectedActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/ConnectedActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="52" column="39" lean-forward="false" selection-start-line="52" selection-start-column="39" selection-end-line="52" selection-end-column="39" />
+            <state relative-caret-position="244">
+              <caret line="38" column="41" lean-forward="false" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -115,9 +111,16 @@
       <file leaf-file-name="FileChooseActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/FileChooseActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="980">
-              <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="490">
+              <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+              <folding>
+                <element signature="e#2292#3061#0" expanded="true" />
+                <element signature="e#3060#3061#0" expanded="true" />
+                <element signature="e#3164#3491#0" expanded="true" />
+                <element signature="e#3490#3491#0" expanded="true" />
+                <element signature="e#3587#3933#0" expanded="true" />
+                <element signature="e#3932#3933#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -2172,11 +2175,11 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_file_chooser.xml" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/FileListAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/ConnectedActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/FileChooseActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/TextEditorActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/ConnectedThread.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/FileChooseActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/ConnectedActivity.java" />
       </list>
     </option>
   </component>
@@ -2591,7 +2594,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="924">
           <caret line="80" column="64" lean-forward="false" selection-start-line="80" selection-start-column="64" selection-end-line="80" selection-end-column="64" />
-          <folding />
+          <folding>
+            <element signature="e#2292#3061#0" expanded="true" />
+            <element signature="e#3060#3061#0" expanded="true" />
+            <element signature="e#3164#3491#0" expanded="true" />
+            <element signature="e#3490#3491#0" expanded="true" />
+            <element signature="e#3587#3933#0" expanded="true" />
+            <element signature="e#3932#3933#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2644,7 +2654,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="924">
           <caret line="80" column="64" lean-forward="true" selection-start-line="80" selection-start-column="64" selection-end-line="80" selection-end-column="64" />
-          <folding />
+          <folding>
+            <element signature="e#2292#3061#0" expanded="true" />
+            <element signature="e#3060#3061#0" expanded="true" />
+            <element signature="e#3164#3491#0" expanded="true" />
+            <element signature="e#3490#3491#0" expanded="true" />
+            <element signature="e#3587#3933#0" expanded="true" />
+            <element signature="e#3932#3933#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2750,14 +2767,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/FileChooseActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="980">
-          <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/TextEditorActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="364">
@@ -2771,14 +2780,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/ConnectedActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="52" column="39" lean-forward="false" selection-start-line="52" selection-start-column="39" selection-end-line="52" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
@@ -2789,8 +2790,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/ConnectedThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="113" column="66" lean-forward="false" selection-start-line="113" selection-start-column="66" selection-end-line="113" selection-end-column="66" />
+        <state relative-caret-position="188">
+          <caret line="95" column="13" lean-forward="false" selection-start-line="95" selection-start-column="13" selection-end-line="95" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/FileChooseActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="490">
+          <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+          <folding>
+            <element signature="e#2292#3061#0" expanded="true" />
+            <element signature="e#3060#3061#0" expanded="true" />
+            <element signature="e#3164#3491#0" expanded="true" />
+            <element signature="e#3490#3491#0" expanded="true" />
+            <element signature="e#3587#3933#0" expanded="true" />
+            <element signature="e#3932#3933#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/speer/lucas/rfcommbluetoohhandler/ConnectedActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="38" column="41" lean-forward="false" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
           <folding />
         </state>
       </provider>

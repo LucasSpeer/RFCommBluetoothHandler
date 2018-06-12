@@ -34,7 +34,8 @@ public class FileChooseActivity extends SupportActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_chooser);
-        Resources resources = getResources();
+        final Resources resources = getResources();
+        final String commands[] = resources.getStringArray(R.array.commandsToSend);
         String rawFiles = "";
         if(ConnectedThread.readData != null){
             String rawData = ConnectedThread.readData;
@@ -45,7 +46,6 @@ public class FileChooseActivity extends SupportActivity {
             }
             if(readJSONdata != null) {
                 try {
-
                     fileContents = readJSONdata.getJSONObject("files");
 
                 } catch (JSONException e) {
@@ -69,9 +69,10 @@ public class FileChooseActivity extends SupportActivity {
             @Override
             public void onClick(View v) {
                 if(!fileListSelection.equals("none")) {
-                    String selection = fileListSelection;
                     try {
-                        chosenFileText = fileContents.getString(fileList[selectionPosition]);
+                        if(fileContents != null) {
+                            chosenFileText = fileContents.getString(fileList[selectionPosition]);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -83,6 +84,16 @@ public class FileChooseActivity extends SupportActivity {
             }
         });
 
+        Button delete = findViewById(R.id.fileListDeleteButton);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String deleteCommand = commands[1];
+                if(!fileListSelection.equals("none")){
+                    ConnectedThread.executeCommand(deleteCommand, fileListSelection);
+                }
+            }
+        });
         Button back = findViewById(R.id.fileListBackButton);
         back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -111,7 +111,7 @@ public class ConnectedThread extends Thread {
 
             make sure to have task.cancel(false); in the cancel() function
          */
-        private byte[] mmBuffer; // mmBuffer store for the stream 
+        private byte[] mmBuffer; // mmBuffer store for the stream
         private InputStream mmInStream = MainActivity.mmInStream;
         private OutputStream mmOutStream = MainActivity.mmOutStream;
         @Override
