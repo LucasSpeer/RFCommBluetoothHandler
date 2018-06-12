@@ -20,28 +20,19 @@ public class TextEditorActivity extends SupportActivity {
 
         final EditText fileName = findViewById(R.id.editorFileName);
         final EditText fileContents = findViewById(R.id.editorTextBox);
-        Resources res = getResources();
-        String commandList[] = res.getStringArray(R.array.commands);
-        try {
-            MainActivity.mmOutStream.write(commandList[0].getBytes());  //This command ultimately leads to the text editor
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        final Resources res = getResources();
+        String commandList[] = res.getStringArray(R.array.commandsToSend);
+        final String sendCommand = commandList[0];    //Get the command to send "saveFile"
 
         Button confirm = findViewById(R.id.editorSendButton);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String stringToSend = fileName.getText().toString() + "\n" + fileContents.getText().toString();     //The python script needs to know the format fileName\nFileContents... in it's textEditorHandler
-                try {
-                    MainActivity.mmOutStream.write(stringToSend.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                ConnectedThread.executeCommand(sendCommand, stringToSend);
             }
         });
 
-        final String backNotify = getString(R.string.onBackToConnAct);
         Button back = findViewById(R.id.editorBackButton);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,11 +41,6 @@ public class TextEditorActivity extends SupportActivity {
                 Intent intent = new Intent(TextEditorActivity.this, ConnectedActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                try {
-                    MainActivity.mmOutStream.write(backNotify.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
         });
 

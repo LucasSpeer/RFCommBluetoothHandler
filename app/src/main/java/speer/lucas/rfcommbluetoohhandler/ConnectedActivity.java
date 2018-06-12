@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import java.io.IOException;
 
@@ -31,7 +30,7 @@ public class ConnectedActivity extends SupportActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connected);
         Resources resources = getResources();
-        commandList = resources.getStringArray(R.array.commands);   //Get list of possible commands from resources
+        commandList = resources.getStringArray(R.array.commandsToDisplay);   //Get list of possible commands from resources
 
         //Setup Buttons
         Button confirm = findViewById(R.id.connectedConfirm);

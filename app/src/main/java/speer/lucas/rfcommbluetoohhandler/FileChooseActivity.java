@@ -87,7 +87,6 @@ public class FileChooseActivity extends SupportActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.BTFound = false;
                 Intent intent = new Intent(FileChooseActivity.this, ConnectedActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

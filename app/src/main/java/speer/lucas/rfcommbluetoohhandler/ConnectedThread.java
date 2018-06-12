@@ -19,6 +19,7 @@ import java.io.OutputStream;
 /**
  * Created by Lucas Speer on 1/2/18.
  * This thread handles the BT socket after a connection is established
+ * Modified from my SmartMirror app (github.com/lucasspeer/smartmirror)
  */
 
 public class ConnectedThread extends Thread {
@@ -71,6 +72,20 @@ public class ConnectedThread extends Thread {
         }
     }
 
+    public static void executeCommand(String command, String data){
+        //This is the main function to send data over the server (although MainActivity.mmOutStream can be accessed anywhere)
+        //The server side script must be anticipating "command" + "\n" + "data..."
+        //All available commands are given in strings.xml (and new ones should be added there)
+        if(MainActivity.mmOutStream != null){
+            String toWrite = command + "\n" + data;
+            try {
+                MainActivity.mmOutStream.write(toWrite.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void run() {
         Backgrounder task = new Backgrounder();
         task.doInBackground();
@@ -96,7 +111,7 @@ public class ConnectedThread extends Thread {
 
             make sure to have task.cancel(false); in the cancel() function
          */
-        private byte[] mmBuffer; // mmBuffer store for the stream
+        private byte[] mmBuffer; // mmBuffer store for the stream 
         private InputStream mmInStream = MainActivity.mmInStream;
         private OutputStream mmOutStream = MainActivity.mmOutStream;
         @Override

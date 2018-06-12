@@ -20,8 +20,12 @@
     <string name="delete">Delete</string>
     <string name="fileName">File Name:</string>
 
-    <string name="onBackToConnAct">+=back</string>
-    <string-array name="commands">
+    <string-array name="commandsToSend">
+        <item>saveFile</item>
+        <item>deleteFile</item>
+    </string-array>
+
+    <string-array name="commandsToDisplay">
         <item>New File</item>
         <item>Open a File</item>
     </string-array>
