@@ -27,24 +27,32 @@ data = "" #recklessly utilize global variables
 JSONfiles = ""
 
 def getFileList() :
-	os.system("sudo rm fileList.save .fileList.swp")
+	os.system("sudo rm fileList.save* .fileList.swp*")
 	os.system("ls local/ | sudo nano fileList")
-	fileFile = open('fileList.save', 'r+') #open the file containing the list of files generated above 
 	nameStr = ""
 	jsonStr = "{\n\"files\":\n{\n"
-	for line in fileFile: #for each line in the rough File list
-		tmp = line
-		nameStr += line.strip("\n")
-		sep = tmp.split(" ") #create a string array split on space
-		for item in sep :
-			item = item.strip(" \n")
-			tmpFile = open("local/" + item, 'r')
-			tmpContents = tmpFile.read()
-			tmpContents = tmpContents.replace("\n", "\\n")
-			jsonStr += "\"" + item + "\": \"" + tmpContents + "\",\n"
-			tmpFile.close()
-	jsonStr = jsonStr[:-2] #remove the last comma
-	jsonStr += "\n},\n\"fileNames\": \"" + nameStr + "\"\n}\n}"
+	try:
+		fileFile = open('fileList.save', 'r+') #open the file containing the list of files generated above 
+	except IOError :
+		fileFile = open('fileList.save', 'w')
+		fileFile.write(" ")
+		fileFile.close()
+		fileFile = open('fileList.save', 'r')
+		jsonStr = ""
+	if jsonStr != "" :
+		for line in fileFile: #for each line in the rough File list
+			tmp = line
+			nameStr += line.strip("\n")
+			sep = tmp.split(" ") #create a string array split on space
+			for item in sep :
+				item = item.strip(" \n")
+				tmpFile = open("local/" + item, 'r')
+				tmpContents = tmpFile.read()
+				tmpContents = tmpContents.replace("\n", "\\n")
+				jsonStr += "\"" + item + "\": \"" + tmpContents + "\",\n"
+				tmpFile.close()
+		jsonStr = jsonStr[:-2] #remove the last comma
+		jsonStr += "\n},\n\"fileNames\": \"" + nameStr + "\"\n}\n}"
 	fileFile.close()
 	return jsonStr
 
