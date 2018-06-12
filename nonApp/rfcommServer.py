@@ -50,31 +50,36 @@ def getFileList() :
 
 def dataHandler(data):
 	print(data)
-	if data == "New File":
-		data = ""
-		try:
-			while not data == "+=back" :
-				data = client_sock.recv(1024)
-				if len(data) == 0: break
-				if data == "+=back" : break
-				textEditor(data)
-		except IOError:
-			pass
+	rawLines = data.split("\n")	#create a list from the data (Format is command\ndata...(app must do the same)
+	command = rawLines[0]		#^ get the filename
+	rawLines.pop(0)				#remove the command from the list
+	rawData = ""				#create an empty string for the data
+	for x in rawLines:
+		rawData += ( x + "\n" )	#Reassemble the data and add the '\n's that were removed
+	rawData = rawData[:-1]		#Remove the lasat \n
+	if command == "saveFile" :
+		textEditor(rawData)
+	if command == "deleteFile" :
+		fileDeleter(rawData)
+	data = ""
+		
+def fileDeleter(toDelete) :
+	bashStr = "sudo rm local/" + toDelete
+	os.system(bashStr)
 
-def textEditor(data):
-	dataLines = data.split("\n")	#create a list from the data (Format is filename\ndata...(app must do the same)
+def textEditor(rawData):
+	dataLines = rawData.split("\n")	#create a list from the data (Format is filename\ndata...(app must do the same)
 	fileName = dataLines[0]			#^ get the filename
 	dataLines.pop(0)				#remove the filename from the list
 	toWrite = ""					#create an empty string for the data
 	for x in dataLines:
 		toWrite += ( x + "\n" )		#Reassemble the data and add the '\n's that were removed
-	if not fileName.startswith("New File") :
-		newFile = open( "local/" + fileName, 'w' )	#create a file in write mode
-		newFile.write(toWrite[:-1])		#write the data, ignoring the last \n with [:-1]
-		newFile.close()
-		print("file local/" + fileName + " saved")
-		JSONfiles = getFileList()		#Whenever data is handled, update the file list and resend
-		client_sock.send(JSONfiles)
+	newFile = open( "local/" + fileName, 'w' )	#create a file in write mode
+	newFile.write(toWrite[:-1])		#write the data, ignoring the last \n with [:-1]
+	newFile.close()
+	print("file local/" + fileName + " saved")
+	JSONfiles = getFileList()		#Update the file list and resend
+	client_sock.send(JSONfiles)
 	data = ""						#clear the data variable
 	
 	
