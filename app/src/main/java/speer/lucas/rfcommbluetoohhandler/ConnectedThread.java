@@ -40,37 +40,53 @@ public class ConnectedThread extends Thread {
     private Boolean isConnected;
     public ConnectedThread(BluetoothSocket socket) {
         mmSocket = socket;
-        InputStream tmpIn = null;
-        OutputStream tmpOut = null;
-
-        // Get the input and output streams; using temp objects because
-        // member streams are final.
-        if(socket != null) {
-            try {
-                tmpIn = socket.getInputStream();
-
-            } catch (IOException e) {
-                Log.e(TAG, "Error occurred when creating input stream", e);
-            }
-            try {
-                tmpOut = socket.getOutputStream();
-            } catch (IOException e) {
-                Log.e(TAG, "Error occurred when creating output stream", e);
-            }
-            MainActivity.mmInStream = tmpIn;
-            MainActivity.mmOutStream = tmpOut;
-            MainActivity.BTFound = true;
-            isConnected = true;
-            MainActivity.BTStatus = "connected";       //Update the status for the main menu text
-            MainActivity.handler.sendEmptyMessage(0);
-        }
-        else{
-            MainActivity.BTFound = false;
-            isConnected = false;
-            MainActivity.BTStatus = "paired";    //Update the status for the main menu text
-            cancel();
-        }
+        waitForConnection.run();
     }
+
+    int timeout = 10;
+    int cnt = 0;
+    private Runnable waitForConnection = new Runnable() {
+        @Override
+        public void run() {
+            MainActivity.handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    InputStream tmpIn = null;
+                    OutputStream tmpOut = null;
+
+                    // Get the input and output streams; using temp objects because
+                    // member streams are final.
+                    if(mmSocket != null) {
+                        try {
+                            tmpIn = mmSocket.getInputStream();
+
+                        } catch (IOException e) {
+                            Log.e(TAG, "Error occurred when creating input stream", e);
+                        }
+                        try {
+                            tmpOut = mmSocket.getOutputStream();
+                        } catch (IOException e) {
+                            Log.e(TAG, "Error occurred when creating output stream", e);
+                        }
+                        MainActivity.mmInStream = tmpIn;
+                        MainActivity.mmOutStream = tmpOut;
+                        MainActivity.BTFound = true;
+                        isConnected = true;
+                        MainActivity.BTStatus = "connected";       //Update the status for the main menu text
+                        MainActivity.handler.sendEmptyMessage(0);
+                    } else if (cnt < timeout){
+                        cnt++;
+                        MainActivity.handler.postDelayed(this, 500);
+                    } else{
+                        MainActivity.BTFound = false;
+                        isConnected = false;
+                        MainActivity.BTStatus = "paired";    //Update the status for the main menu text
+                        cancel();
+                    }
+                }
+            }, 500);
+        }
+    };
 
     public static void executeCommand(String command, String data){
         //This is the main function to send data over the server (although MainActivity.mmOutStream can be accessed anywhere)
@@ -80,6 +96,17 @@ public class ConnectedThread extends Thread {
             String toWrite = command + "\n" + data;
             try {
                 MainActivity.mmOutStream.write(toWrite.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void sendInt(int toWrite){
+        String str = String.valueOf(toWrite) + "#";
+        if(MainActivity.mmOutStream != null){
+            try {
+                MainActivity.mmOutStream.write(str.getBytes());
             } catch (IOException e) {
                 e.printStackTrace();
             }

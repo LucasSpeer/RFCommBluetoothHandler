@@ -2,6 +2,7 @@
     <string name="app_name">RFCommBluetoohHandler</string>
 
     <string name="mainTitle">Main Menu</string>
+    <string name="refr">Refresh</string>
     <string name="mainAttemptButton">Attempt to Connect</string>
     <string name="mainStatus">Current Device: </string>
     <string name="mainListTitle">Paired Devices(choose one):</string>
@@ -28,5 +29,6 @@
     <string-array name="commandsToDisplay">
         <item>New File</item>
         <item>Open a File</item>
+        <item>Send Integer</item>
     </string-array>
 </resources>

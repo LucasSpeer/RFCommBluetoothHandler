@@ -35,7 +35,6 @@ public class BluetoothHandler extends Thread {
         try {
             if(mmSocket != null){
                 mmSocket.connect();   //Connect to the remote device through the socket. This call blocks until it succeeds or throws an exception
-
             }
         } catch (IOException connectException) {
             try {
@@ -61,6 +60,7 @@ public class BluetoothHandler extends Thread {
             task.cancel(false);
         }
     }
+
     static class Backgrounder extends AsyncTask<Void, Void, Void> {
         /*
             this function creates a background task for the bluetooth connection to keep the UI responsive to activate call:

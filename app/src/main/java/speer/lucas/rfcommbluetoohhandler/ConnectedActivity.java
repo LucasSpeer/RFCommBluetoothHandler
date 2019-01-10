@@ -37,14 +37,24 @@ public class ConnectedActivity extends SupportActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (connCurrentSelection){  //Each case is a string from @strings/commands[]
-                    case "New File":
+                int pos = 0;
+                for (int i = 0; i < commandList.length; i++) {
+                    if(connCurrentSelection.equals(commandList[i])){
+                        pos = i;
+                    }
+                }
+                switch (pos){  //Each case is a string from @strings/commands[]
+                    case 0:
                         Intent editorIntent = new Intent(ConnectedActivity.this, TextEditorActivity.class);
                         startActivity(editorIntent);
                         break;
-                    case "Open a File":
+                    case 1:
                         Intent fileIntent = new Intent(ConnectedActivity.this, FileChooseActivity.class);
                         startActivity(fileIntent);
+                        break;
+                    case 2:
+                        Intent intIntent = new Intent(ConnectedActivity.this, SendIntActivity.class);
+                        startActivity(intIntent);
                         break;
                 }
             }

@@ -49,19 +49,20 @@ public class CommandListAdapter extends RecyclerView.Adapter<CommandListAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.getTextView().setText(mDataSet[position]);
-        textViewArr[position] = holder.getTextView();       //Add each TextView into the textViewArr array
+        final int pos = holder.getAdapterPosition();
+        holder.getTextView().setText(mDataSet[pos]);
+        textViewArr[pos] = holder.getTextView();       //Add each TextView into the textViewArr array
         holder.getTextView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                ConnectedActivity.connCurrentSelection = mDataSet[position];   //Get the Device selected
-                ConnectedActivity.selectionPosition = position;            //and the position in the array
+                ConnectedActivity.connCurrentSelection = mDataSet[pos];   //Get the Device selected
+                ConnectedActivity.selectionPosition = pos;            //and the position in the array
 
                 for(int i = 0; i < textViewArr.length; i++) {
                     textViewArr[i].setBackground(null);
                 }
-                textViewArr[position].setBackgroundColor(resources.getColor(R.color.colorAccent)); //Highlight the selected option
+                textViewArr[pos].setBackgroundColor(resources.getColor(R.color.colorAccent)); //Highlight the selected option
 
             }
         });

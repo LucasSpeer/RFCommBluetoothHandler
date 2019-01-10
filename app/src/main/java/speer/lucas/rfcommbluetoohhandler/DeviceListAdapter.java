@@ -48,7 +48,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, final int pos) {
+        final int position = holder.getAdapterPosition();
         holder.getTextView().setText(mDataSet[position]);
         textViewArr[position] = holder.getTextView();       //Add each TextView into the textViewArr array
         holder.getTextView().setOnClickListener(new View.OnClickListener() {

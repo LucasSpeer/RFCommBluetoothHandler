@@ -2,31 +2,21 @@ package speer.lucas.rfcommbluetoohhandler;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.os.ParcelUuid;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -49,9 +39,7 @@ public class MainActivity extends AppCompatActivity {
     //List Variables
     public static String currentSelection;
     public static int selectionPosition;
-    protected RecyclerView mRecyclerView;
-    protected RecyclerView.Adapter mAdapter;
-    protected RecyclerView.LayoutManager mLayoutManager;
+
     public static String[] nameList;
     public static String[] MACList;
 
@@ -60,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefs = null;      //create a shared preference for storing settings
     private SharedPreferences.Editor editor;
 
+    DeviceFragment mainListFrag;
+
+    String sppUUID = "00001101-0000-1000-8000-00805f9b34fb";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         if (!mBluetoothAdapter.isEnabled()) {                          //If bluetooth is not enabled, enable it
             mBluetoothAdapter.enable();
         }
-        uuid = UUID.fromString("94f39d29-7d6d-437d-973b-fba39e49d4ee");
+        uuid = UUID.fromString(sppUUID);
         findDevices();
 
         //Setup for Button
@@ -98,9 +89,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final Button refresh = findViewById(R.id.mainRefreshButton);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findDevices();
+                mainListFrag.refreshList();
+            }
+        });
+
         //Fragment Initialize
-        Fragment mainListFrag = new deviceFragment();
+
         FragmentManager fragmentManager = getSupportFragmentManager();
+        mainListFrag = new DeviceFragment();
         fragmentManager.beginTransaction().add(R.id.mainListFrag, mainListFrag).commit();
         //View fragView = mainListFrag.getView();
         /*
@@ -113,11 +114,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         */
-        mRecyclerView = findViewById(R.id.mainListRecycler);    //find the recyclerView
-        mLayoutManager = new LinearLayoutManager(this);     //Get and set a new layout manager
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new DeviceListAdapter(MainActivity.nameList);            //Get and set the adapter for String[] -> RecyclerView as defined in DeviceListAdapter
-        mRecyclerView.setAdapter(mAdapter);
+
 
         //setup Handler
         handler = new Handler(){
