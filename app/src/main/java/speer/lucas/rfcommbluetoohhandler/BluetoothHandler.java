@@ -9,7 +9,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.UUID;
 
-/**
+/*
  * Created by Lucas on 11/19/17.
  * handles the bluetooth connection process. Once connected it hands the Bluetooth Socket to ConnectedThread, which handles the data transfer
  */
@@ -30,23 +30,36 @@ public class BluetoothHandler extends Thread {
         BTdevice = device;
     }
 
+    private int timeout = 20;
+    private int cnt = 0;
     public void run() {
         mBluetoothAdapter.cancelDiscovery();    //Cancel discovery because it otherwise slows down the connection.
-        try {
-            if(mmSocket != null){
-                mmSocket.connect();   //Connect to the remote device through the socket. This call blocks until it succeeds or throws an exception
+        MainActivity.handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    if(mmSocket != null){
+                        if(!mmSocket.isConnected()) {
+                            mmSocket.connect();   //Connect to the remote device through the socket. This call blocks until it succeeds or throws an exception
+                            BTthread = new ConnectedThread(mmSocket);     //Create a new thread to handle the connection.
+                            BTthread.start();
+                        }
+                    }
+                } catch (IOException connectException) {
+                    connectException.printStackTrace();
+                }
+                if (cnt < timeout){
+                    if(mmSocket == null) {
+                        cnt++;
+                        MainActivity.handler.postDelayed(this, 500);
+                    }
+                }
+
+
             }
-        } catch (IOException connectException) {
-            try {
-                mmSocket.close();    //Unable to connect; close the socket and return.
-                MainActivity.BTStatus = "paired";
-            } catch (IOException closeException) {
-                Log.e(TAG, "Could not close the client socket", closeException);
-            }
-            return;
-        }
-        BTthread = new ConnectedThread(mmSocket);     //Create a new thread to handle the connection.
-        BTthread.start();
+        }, 500);
+
     }
 
     void cancel() {
@@ -55,7 +68,9 @@ public class BluetoothHandler extends Thread {
         } catch (IOException e) {
             Log.e(TAG, "Could not close the client socket", e);
         }
-        BTthread.cancel();
+        if(BTthread != null) {
+            BTthread.cancel();
+        }
         if (task != null) {
             task.cancel(false);
         }

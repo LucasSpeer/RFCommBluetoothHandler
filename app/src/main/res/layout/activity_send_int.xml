@@ -17,22 +17,61 @@
         android:text="Send an integer"
         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-    <EditText
-        android:id="@+id/sendIntBox"
-        android:layout_width="100dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_weight="0"
-        android:ems="10"
-        android:inputType="numberSigned" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="By Slider" />
+
+        <SeekBar
+            android:id="@+id/sendIntSeekBar"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0"
+            android:max="180"
+            android:progress="90" />
+
+        <CheckBox
+            android:id="@+id/sendIntCenter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="0"
+            android:text="Center on release"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:layout_weight="0"
+            android:text="1 at a time" />
+
+        <EditText
+            android:id="@+id/sendIntBox"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:inputType="numberSigned" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="bottom"
         android:orientation="horizontal">
 
         <Button
@@ -53,7 +92,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp"
             android:layout_weight="1"
-            android:text="@string/confirm"
+            android:text="Send"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </LinearLayout>

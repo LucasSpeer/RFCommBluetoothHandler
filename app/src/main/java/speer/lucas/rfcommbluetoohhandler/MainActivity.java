@@ -120,10 +120,21 @@ public class MainActivity extends AppCompatActivity {
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg){
-                startActivity(new Intent(MainActivity.this, ConnectedActivity.class));
+                Bundle args = msg.getData();
+                Boolean connected = true;
+                if(args != null){
+                    connected = args.getBoolean("connected", true);
+                }
+                if(connected) {
+                    startActivity(new Intent(MainActivity.this, ConnectedActivity.class));
+                } else {
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                }
             }
         };
         editor.apply();
+        connectButton.performClick();
+
     }
 
 

@@ -4,7 +4,9 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -34,57 +36,49 @@ public class ConnectedThread extends Thread {
         int MESSAGE_TOAST = 2;
     }
     // ... (Add other message types here as needed.)
-    private final BluetoothSocket mmSocket;
+    private BluetoothSocket mmSocket;
     private byte[] mmBuffer; // mmBuffer store for the stream
     public static String readData;
     private Boolean isConnected;
-    public ConnectedThread(BluetoothSocket socket) {
+    public ConnectedThread(final BluetoothSocket socket) {
+
+        InputStream tmpIn = null;
+        OutputStream tmpOut = null;
         mmSocket = socket;
-        waitForConnection.run();
+        // Get the input and output streams; using temp objects because
+        // member streams are final.
+        if(mmSocket != null && mmSocket.isConnected()) {
+            try {
+                tmpIn = mmSocket.getInputStream();
+
+            } catch (IOException e) {
+                Log.e(TAG, "Error occurred when creating input stream", e);
+            }
+            try {
+                tmpOut = mmSocket.getOutputStream();
+            } catch (IOException e) {
+                Log.e(TAG, "Error occurred when creating output stream", e);
+            }
+            MainActivity.mmInStream = tmpIn;
+            MainActivity.mmOutStream = tmpOut;
+            MainActivity.BTFound = true;
+            isConnected = true;
+            MainActivity.BTStatus = "connected";       //Update the status for the main menu text
+            MainActivity.handler.sendEmptyMessage(0);
+        } else{
+            MainActivity.BTFound = false;
+            isConnected = false;
+            MainActivity.BTStatus = "paired";    //Update the status for the main menu text
+            cancel();
+        }
     }
 
-    int timeout = 10;
+    int timeout = 30;
     int cnt = 0;
     private Runnable waitForConnection = new Runnable() {
         @Override
         public void run() {
-            MainActivity.handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    InputStream tmpIn = null;
-                    OutputStream tmpOut = null;
 
-                    // Get the input and output streams; using temp objects because
-                    // member streams are final.
-                    if(mmSocket != null) {
-                        try {
-                            tmpIn = mmSocket.getInputStream();
-
-                        } catch (IOException e) {
-                            Log.e(TAG, "Error occurred when creating input stream", e);
-                        }
-                        try {
-                            tmpOut = mmSocket.getOutputStream();
-                        } catch (IOException e) {
-                            Log.e(TAG, "Error occurred when creating output stream", e);
-                        }
-                        MainActivity.mmInStream = tmpIn;
-                        MainActivity.mmOutStream = tmpOut;
-                        MainActivity.BTFound = true;
-                        isConnected = true;
-                        MainActivity.BTStatus = "connected";       //Update the status for the main menu text
-                        MainActivity.handler.sendEmptyMessage(0);
-                    } else if (cnt < timeout){
-                        cnt++;
-                        MainActivity.handler.postDelayed(this, 500);
-                    } else{
-                        MainActivity.BTFound = false;
-                        isConnected = false;
-                        MainActivity.BTStatus = "paired";    //Update the status for the main menu text
-                        cancel();
-                    }
-                }
-            }, 500);
         }
     };
 
@@ -108,6 +102,10 @@ public class ConnectedThread extends Thread {
             try {
                 MainActivity.mmOutStream.write(str.getBytes());
             } catch (IOException e) {
+                Message msg = new Message();
+                Bundle args = new Bundle();
+                args.putBoolean("connected", false);
+                MainActivity.handler.sendMessage(msg);
                 e.printStackTrace();
             }
         }
@@ -148,7 +146,9 @@ public class ConnectedThread extends Thread {
             int numBytes = 0; // bytes returned from read()
 
             // Keep listening to the InputStream until an exception occurs.
+
             while(MainActivity.mmInStream != null){
+
                 try {
                    // Read from the InputStream
                    numBytes = mmInStream.read(mmBuffer);
@@ -161,6 +161,10 @@ public class ConnectedThread extends Thread {
                    readData = tmp;
                 } catch (IOException e) {
                     Log.d(TAG, "Input stream was disconnected", e);
+                    Message msg = new Message();
+                    Bundle args = new Bundle();
+                    args.putBoolean("connected", false);
+                    MainActivity.handler.sendMessage(msg);
                     break;
                 }
             }
